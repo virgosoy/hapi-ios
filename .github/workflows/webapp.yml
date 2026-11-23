@@ -3,9 +3,11 @@ name: Deploy Web App to GitHub Pages
 on:
     push:
         branches:
-            - main
+            - ios16.1.1
         paths:
             - 'web/**'
+            - 'package.json'
+            - 'bun.lock'
             - '.github/workflows/webapp.yml'
     workflow_dispatch:
 
@@ -28,9 +30,8 @@ jobs:
             - name: Build web app
               env:
                   VITE_REQUIRE_HUB_URL: '1'
+                  VITE_BASE_URL: /hapi-ios/
               run: bun run --cwd web build
-            - name: Add CNAME for custom domain
-              run: echo "app.hapi.run" > web/dist/CNAME
             - name: Setup Pages
               uses: actions/configure-pages@v5
             - name: Upload artifact
